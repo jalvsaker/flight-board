@@ -32,7 +32,7 @@ export function StatusBadge({ code, time, delayed }: StatusBadgeProps) {
 
     if (time) {
         const date = new Date(time);
-        const timeStr = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+        const timeStr = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Oslo' });
         label = `${label} ${timeStr}`;
     }
 
