@@ -30,7 +30,9 @@ export function FlightTable({ flights, direction, airlineNames, airportNames }: 
                             <th className="px-6 py-4 font-medium">
                                 {direction === 'D' ? 'Destination' : 'Origin'}
                             </th>
-                            <th className="px-6 py-4 font-medium">Gate/Belt</th>
+                            <th className="px-6 py-4 font-medium">
+                                {direction === 'D' ? 'Gate' : 'Belt'}
+                            </th>
                             <th className="px-6 py-4 font-medium">Status</th>
                         </tr>
                     </thead>
@@ -53,7 +55,7 @@ export function FlightTable({ flights, direction, airlineNames, airportNames }: 
                                     className="group hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors"
                                 >
                                     <td
-                                        className="px-6 py-4 font-medium text-zinc-900 dark:text-zinc-100 whitespace-nowrap"
+                                        className="px-6 py-4 font-medium text-zinc-900 dark:text-zinc-100 whitespace-nowrap tabular-nums"
                                         suppressHydrationWarning
                                     >
                                         {timeStr}
