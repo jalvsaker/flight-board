@@ -42,6 +42,7 @@ export function FlightTable({ flights, direction, airlineNames, airportNames }: 
                             const timeStr = scheduleTime.toLocaleTimeString('en-GB', {
                                 hour: '2-digit',
                                 minute: '2-digit',
+                                timeZone: 'Europe/Oslo',
                             });
 
                             const airlineName = airlineNames[flight.airline] || flight.airline;
@@ -54,10 +55,7 @@ export function FlightTable({ flights, direction, airlineNames, airportNames }: 
                                     key={uniqueKey}
                                     className="group hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors"
                                 >
-                                    <td
-                                        className="px-6 py-4 font-medium text-zinc-900 dark:text-zinc-100 whitespace-nowrap tabular-nums"
-                                        suppressHydrationWarning
-                                    >
+                                    <td className="px-6 py-4 font-medium text-zinc-900 dark:text-zinc-100 whitespace-nowrap tabular-nums">
                                         {timeStr}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">
