@@ -77,7 +77,9 @@ export function FlightTable({ flights, direction, airlineNames, airportNames }: 
                                         {airportName}
                                         {flight.via_airport && (
                                             <span className="ml-1 text-xs text-zinc-400 font-normal">
-                                                via {flight.via_airport}
+                                                via {flight.via_airport.split(',').map(code =>
+                                                    airportNames[code.trim()] || code.trim()
+                                                ).join(', ')}
                                             </span>
                                         )}
                                     </td>
