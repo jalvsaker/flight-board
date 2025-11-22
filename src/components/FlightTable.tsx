@@ -86,11 +86,18 @@ export function FlightTable({ flights, direction, airlineNames, airportNames }: 
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         {direction === 'D' ? (
-                                            flight.gate ? (
-                                                <span className="font-mono text-zinc-900 dark:text-zinc-100">{flight.gate}</span>
-                                            ) : (
-                                                <span className="text-zinc-400">-</span>
-                                            )
+                                            <>
+                                                {flight.check_in && (
+                                                    <div className="text-xs text-zinc-500 dark:text-zinc-400">
+                                                        Check-in: {flight.check_in}
+                                                    </div>
+                                                )}
+                                                {flight.gate ? (
+                                                    <span className="font-mono text-zinc-900 dark:text-zinc-100">{flight.gate}</span>
+                                                ) : (
+                                                    <span className="text-zinc-400">-</span>
+                                                )}
+                                            </>
                                         ) : (
                                             flight.belt ? (
                                                 <span className="font-mono text-zinc-900 dark:text-zinc-100">Belt {flight.belt}</span>
