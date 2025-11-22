@@ -74,12 +74,13 @@ export function FlightTable({ flights, direction, airlineNames, airportNames }: 
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">{airlineName}</td>
                                     <td className="px-6 py-4 font-medium text-zinc-900 dark:text-zinc-100 whitespace-nowrap">
-                                        {airportName}
+                                        {airportName} ({flight.airport})
                                         {flight.via_airport && (
                                             <span className="ml-1 text-xs text-zinc-400 font-normal">
-                                                via {flight.via_airport.split(',').map(code =>
-                                                    airportNames[code.trim()] || code.trim()
-                                                ).join(', ')}
+                                                via {flight.via_airport.split(',').map(code => {
+                                                    const trimmedCode = code.trim();
+                                                    return `${airportNames[trimmedCode] || trimmedCode} (${trimmedCode})`;
+                                                }).join(', ')}
                                             </span>
                                         )}
                                     </td>
