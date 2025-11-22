@@ -49,6 +49,7 @@ export default async function Home({ searchParams }: PageProps) {
         airport={airport}
         airlineNames={airlineNames}
         airportNames={airportNames}
+        lastUpdated={new Date().toISOString()}
       />
     </main>
   );

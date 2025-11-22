@@ -13,18 +13,46 @@ interface FlightBoardProps {
     airport: string;
     airlineNames: NameMap;
     airportNames: NameMap;
+    lastUpdated: string;
 }
 
-export function FlightBoard({ flights, direction, airport, airlineNames, airportNames }: FlightBoardProps) {
+export function FlightBoard({ flights, direction, airport, airlineNames, airportNames, lastUpdated }: FlightBoardProps) {
     const router = useRouter();
 
     useEffect(() => {
+        const checkFreshness = () => {
+            const lastUpdateDate = new Date(lastUpdated);
+            const now = new Date();
+            const diff = now.getTime() - lastUpdateDate.getTime();
+
+            // If data is older than 3 minutes (180000ms), refresh
+            if (diff > 180000) {
+                router.refresh();
+            }
+        };
+
+        // Check immediately on mount
+        checkFreshness();
+
+        // Check when tab becomes visible
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'visible') {
+                checkFreshness();
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        // Also keep the interval for while the page is open
         const interval = setInterval(() => {
             router.refresh();
-        }, 180000); // Refresh every 3 minutes (180 seconds) per API spec
+        }, 60000);
 
-        return () => clearInterval(interval);
-    }, [router]);
+        return () => {
+            clearInterval(interval);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, [router, lastUpdated]);
 
     return (
         <div className="w-full max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
@@ -94,7 +122,7 @@ export function FlightBoard({ flights, direction, airport, airlineNames, airport
             />
 
             <div className="mt-8 text-center text-xs text-zinc-400 dark:text-zinc-500">
-                Data provided by Avinor. Updated every 3 minutes.
+                Data provided by Avinor.
             </div>
         </div>
     );
