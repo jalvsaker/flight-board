@@ -1,6 +1,7 @@
 {
-  "name": "my-next-app",
+  "name": "flight-board",
   "version": "0.1.0",
+  "description": "Real-time flight information board for Norwegian airports using Avinor API",
   "private": true,
   "scripts": {
     "dev": "next dev",

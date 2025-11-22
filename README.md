@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Norwegian Flight Board
+
+A real-time flight information board for Norwegian airports using the Avinor Flight Data API.
+
+## Features
+
+- **Real-time Flight Data**: Live flight information from Avinor's public API
+- **Auto-Refresh**: Automatically updates every 3 minutes
+- **All Norwegian Airports**: Support for 48+ Avinor-operated airports
+- **Departures & Arrivals**: Switch between departure and arrival boards
+- **Full Airport Names**: Displays full airline and airport names instead of codes
+- **Check-in Information**: Shows check-in desk numbers for departures
+- **Responsive Design**: Works on desktop and mobile devices
+- **Dark Mode**: Automatic dark mode support
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the flight board.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **fast-xml-parser** - XML parsing for Avinor API
 
-## Learn More
+## API
 
-To learn more about Next.js, take a look at the following resources:
+This application uses the public Avinor Flight Data API:
+- Flight Data: `https://asrv.avinor.no/XmlFeed/v1.0`
+- Airport Names: `https://asrv.avinor.no/airportNames/v1.0`
+- Airline Names: `https://asrv.avinor.no/airlineNames/v1.0`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Data is cached according to Avinor's recommendations:
+- Flight data: 3 minutes
+- Name data: 1 hour
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
+Deploy to Vercel:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The application uses Next.js ISR (Incremental Static Regeneration) for caching, which works seamlessly on Vercel's serverless platform.
