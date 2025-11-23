@@ -35,7 +35,7 @@ export default async function Home({ searchParams }: PageProps) {
   const hoursBack = direction === 'A' ? 2 : 1;
   const hoursForward = direction === 'A' ? 2 : 4;
 
-  const [flights, airlineNames, airportNames] = await Promise.all([
+  const [{ flights, lastUpdate }, airlineNames, airportNames] = await Promise.all([
     fetchFlights(airport, direction, hoursBack, hoursForward),
     fetchAirlineNames(),
     fetchAirportNames(),
@@ -49,7 +49,7 @@ export default async function Home({ searchParams }: PageProps) {
         airport={airport}
         airlineNames={airlineNames}
         airportNames={airportNames}
-        lastUpdated={new Date().toISOString()}
+        lastUpdated={lastUpdate}
       />
     </main>
   );

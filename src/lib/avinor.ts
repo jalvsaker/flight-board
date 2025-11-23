@@ -23,6 +23,7 @@ export interface AirportData {
     airport: {
         '@_name': string;
         flights: {
+            '@_lastUpdate': string;
             flight: Flight[];
         };
     };
@@ -33,7 +34,7 @@ const parser = new XMLParser({
     attributeNamePrefix: '@_',
 });
 
-export async function fetchFlights(airportCode: string = 'OSL', direction?: 'A' | 'D', hoursBack: number = 2, hoursForward: number = 4): Promise<Flight[]> {
+export async function fetchFlights(airportCode: string = 'OSL', direction?: 'A' | 'D', hoursBack: number = 2, hoursForward: number = 4): Promise<{ flights: Flight[], lastUpdate: string }> {
     const params = new URLSearchParams({
         airport: airportCode,
         TimeFrom: hoursBack.toString(),
@@ -56,15 +57,17 @@ export async function fetchFlights(airportCode: string = 'OSL', direction?: 'A' 
     const data = parser.parse(xmlText) as AirportData;
 
     if (!data.airport?.flights?.flight) {
-        return [];
+        return { flights: [], lastUpdate: new Date().toISOString() };
     }
+
+    const lastUpdate = data.airport.flights['@_lastUpdate'] || new Date().toISOString();
 
     // Ensure it's always an array (single flight might be parsed as object)
     const flights = Array.isArray(data.airport.flights.flight)
         ? data.airport.flights.flight
         : [data.airport.flights.flight];
 
-    return flights;
+    return { flights, lastUpdate };
 }
 
 export interface NameMap {
