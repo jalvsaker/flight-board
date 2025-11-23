@@ -19,7 +19,13 @@ export function StatusBadge({ code, time, delayed }: StatusBadgeProps) {
     } else if (code === 'C') {
         colorClass = 'bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/10 dark:bg-red-400/10 dark:text-red-400 dark:ring-red-400/20';
         label = 'Cancelled';
-    } else if (delayed || code === 'E') {
+    } else if (code === 'E') {
+        colorClass = 'bg-yellow-50 text-yellow-800 ring-1 ring-inset ring-yellow-600/20 dark:bg-yellow-400/10 dark:text-yellow-500 dark:ring-yellow-400/20';
+        label = 'New Time';
+    } else if (code === 'N') {
+        colorClass = 'bg-yellow-50 text-yellow-800 ring-1 ring-inset ring-yellow-600/20 dark:bg-yellow-400/10 dark:text-yellow-500 dark:ring-yellow-400/20';
+        label = 'New Info';
+    } else if (delayed) {
         colorClass = 'bg-yellow-50 text-yellow-800 ring-1 ring-inset ring-yellow-600/20 dark:bg-yellow-400/10 dark:text-yellow-500 dark:ring-yellow-400/20';
         label = 'Delayed';
     } else {
