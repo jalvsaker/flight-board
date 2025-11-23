@@ -48,7 +48,7 @@ export function FlightTable({ flights, direction, airlineNames, airportNames }: 
                             const airlineName = airlineNames[flight.airline] || flight.airline;
                             const airportName = airportNames[flight.airport] || flight.airport;
 
-                            const uniqueKey = flight.uniqueID || `${flight.flight_id}-${flight.schedule_time}`;
+                            const uniqueKey = flight['@_uniqueID'] || `${flight.flight_id}-${flight.schedule_time}`;
 
                             return (
                                 <tr

@@ -1,7 +1,7 @@
 import { XMLParser } from 'fast-xml-parser';
 
 export interface Flight {
-    uniqueID: string;
+    '@_uniqueID': string;
     airline: string;
     flight_id: string;
     dom_int: string;
