@@ -37,7 +37,7 @@ export function FlightTable({ flights, direction, airlineNames, airportNames }: 
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
-                        {flights.map((flight) => {
+                        {flights.map((flight, index) => {
                             const scheduleTime = new Date(flight.schedule_time);
                             const timeStr = scheduleTime.toLocaleTimeString('en-GB', {
                                 hour: '2-digit',
@@ -111,6 +111,7 @@ export function FlightTable({ flights, direction, airlineNames, airportNames }: 
                                             code={flight.status?.['@_code']}
                                             time={flight.status?.['@_time']}
                                             delayed={flight.delayed === 'Y'}
+                                            schedule_time={flight.schedule_time}
                                         />
                                     </td>
                                 </tr>

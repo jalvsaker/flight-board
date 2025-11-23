@@ -4,9 +4,10 @@ interface StatusBadgeProps {
     code?: string;
     time?: string;
     delayed?: boolean;
+    schedule_time?: string;
 }
 
-export function StatusBadge({ code, time, delayed }: StatusBadgeProps) {
+export function StatusBadge({ code, time, delayed, schedule_time }: StatusBadgeProps) {
     let label = '';
     let colorClass = 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200';
 
@@ -20,8 +21,14 @@ export function StatusBadge({ code, time, delayed }: StatusBadgeProps) {
         colorClass = 'bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/10 dark:bg-red-400/10 dark:text-red-400 dark:ring-red-400/20';
         label = 'Cancelled';
     } else if (code === 'E') {
-        colorClass = 'bg-yellow-50 text-yellow-800 ring-1 ring-inset ring-yellow-600/20 dark:bg-yellow-400/10 dark:text-yellow-500 dark:ring-yellow-400/20';
-        label = 'New Time';
+        // Avinor API anomaly: If new time is same as schedule time, it's actually on time
+        if (time && schedule_time && new Date(time).getTime() === new Date(schedule_time).getTime()) {
+            label = 'On Time';
+            colorClass = 'bg-zinc-50 text-zinc-700 ring-1 ring-inset ring-zinc-600/10 dark:bg-zinc-400/10 dark:text-zinc-400 dark:ring-zinc-400/20';
+        } else {
+            colorClass = 'bg-yellow-50 text-yellow-800 ring-1 ring-inset ring-yellow-600/20 dark:bg-yellow-400/10 dark:text-yellow-500 dark:ring-yellow-400/20';
+            label = 'New Time';
+        }
     } else if (code === 'N') {
         colorClass = 'bg-yellow-50 text-yellow-800 ring-1 ring-inset ring-yellow-600/20 dark:bg-yellow-400/10 dark:text-yellow-500 dark:ring-yellow-400/20';
         label = 'New Info';
@@ -29,8 +36,8 @@ export function StatusBadge({ code, time, delayed }: StatusBadgeProps) {
         colorClass = 'bg-yellow-50 text-yellow-800 ring-1 ring-inset ring-yellow-600/20 dark:bg-yellow-400/10 dark:text-yellow-500 dark:ring-yellow-400/20';
         label = 'Delayed';
     } else {
-        label = 'On Time';
-        colorClass = 'bg-zinc-50 text-zinc-700 ring-1 ring-inset ring-zinc-600/10 dark:bg-zinc-400/10 dark:text-zinc-400 dark:ring-zinc-400/20';
+        label = 'Unknown';
+        colorClass = 'bg-zinc-50 text-zinc-500 ring-1 ring-inset ring-zinc-600/10 dark:bg-zinc-400/10 dark:text-zinc-500 dark:ring-zinc-400/20';
     }
 
     if (time) {
