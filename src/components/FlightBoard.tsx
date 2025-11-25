@@ -45,14 +45,14 @@ export function FlightBoard({ flights, direction, airport, airlineNames, airport
 
         // Also keep the interval for while the page is open
         const interval = setInterval(() => {
-            router.refresh();
+            checkFreshness();
         }, 60000);
 
         return () => {
             clearInterval(interval);
             document.removeEventListener('visibilitychange', handleVisibilityChange);
         };
-    }, [router, lastUpdated]);
+    }, [router, lastUpdated, airport, direction]);
 
     return (
         <div className="w-full max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
