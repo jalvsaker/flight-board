@@ -8,3 +8,7 @@ export const VALID_AIRPORTS = [
 ] as const;
 
 export type AirportCode = typeof VALID_AIRPORTS[number];
+
+export function isValidAirport(code: string): code is AirportCode {
+    return VALID_AIRPORTS.includes(code as AirportCode);
+}

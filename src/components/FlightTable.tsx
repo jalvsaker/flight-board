@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flight, NameMap } from '@/lib/avinor';
+import { Flight, NameMap, formatViaAirports } from '@/lib/avinor';
 import { StatusBadge } from './StatusBadge';
 
 interface FlightTableProps {
@@ -77,10 +77,7 @@ export function FlightTable({ flights, direction, airlineNames, airportNames }: 
                                         {airportName} ({flight.airport})
                                         {flight.via_airport && (
                                             <span className="ml-1 text-xs text-zinc-400 font-normal">
-                                                via {flight.via_airport.split(',').map(code => {
-                                                    const trimmedCode = code.trim();
-                                                    return `${airportNames[trimmedCode] || trimmedCode} (${trimmedCode})`;
-                                                }).join(', ')}
+                                                via {formatViaAirports(flight.via_airport, airportNames)}
                                             </span>
                                         )}
                                     </td>

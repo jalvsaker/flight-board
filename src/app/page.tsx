@@ -1,7 +1,7 @@
 import { fetchFlights, fetchAirlineNames, fetchAirportNames } from "@/lib/avinor";
 import { FlightBoard } from "@/components/FlightBoard";
 import { redirect } from "next/navigation";
-import { VALID_AIRPORTS } from "@/lib/constants";
+import { isValidAirport } from "@/lib/constants";
 
 interface PageProps {
   searchParams: Promise<{
@@ -16,24 +16,21 @@ export default async function Home({ searchParams }: PageProps) {
   const directionParam = params.direction?.toUpperCase();
 
   // Validate airport
-  const airport = (airportParam && VALID_AIRPORTS.includes(airportParam as any) ? airportParam : 'OSL') as string;
+  const airport = (airportParam && isValidAirport(airportParam) ? airportParam : 'OSL');
 
   // Validate direction
   const direction: 'A' | 'D' = (directionParam === 'A' || directionParam === 'D') ? directionParam : 'D';
 
   // Redirect if invalid parameters were provided
-  if (airportParam && !VALID_AIRPORTS.includes(airportParam as any)) {
+  if (airportParam && !isValidAirport(airportParam)) {
     redirect(`/?airport=OSL&direction=${direction}`);
   }
   if (directionParam && directionParam !== 'A' && directionParam !== 'D') {
     redirect(`/?airport=${airport}&direction=D`);
   }
 
-  // Fetch flights
-  // For departures, we want to see flights in the next few hours
-  // For arrivals, we might want to see recent arrivals too
-  const hoursBack = direction === 'A' ? 2 : 1;
-  const hoursForward = direction === 'A' ? 2 : 4;
+  const hoursBack = 1;
+  const hoursForward = 7;
 
   const [{ flights, lastUpdate }, airlineNames, airportNames] = await Promise.all([
     fetchFlights(airport, direction, hoursBack, hoursForward),

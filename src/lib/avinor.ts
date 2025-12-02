@@ -118,3 +118,10 @@ export async function fetchAirlineNames(): Promise<NameMap> {
 export async function fetchAirportNames(): Promise<NameMap> {
     return fetchNames('airportNames', 'airport');
 }
+
+export function formatViaAirports(viaString: string, airportNames: NameMap): string {
+    return viaString.split(',').map(code => {
+        const trimmedCode = code.trim();
+        return `${airportNames[trimmedCode] || trimmedCode} (${trimmedCode})`;
+    }).join(', ');
+}
